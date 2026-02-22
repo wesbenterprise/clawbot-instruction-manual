@@ -19,12 +19,13 @@ A comprehensive, interactive cheat sheet for switching from Windows to Mac — b
 
 ## Files
 
-- `macbook-cheatsheet.html` — Standalone HTML version (open in any browser)
+- `index.html` — Standalone HTML version (open in any browser)
 - `macbook-cheatsheet.jsx` — React component version (for use in React apps / Claude artifacts)
+- `netlify.toml` — Netlify deployment configuration
 
 ## Usage
 
-**HTML version:** Just open `macbook-cheatsheet.html` in your browser. No dependencies needed.
+**HTML version:** Just open `index.html` in your browser. No dependencies needed.
 
 **React version:** Import the default export from `macbook-cheatsheet.jsx`. Requires React and lucide-react.
 
