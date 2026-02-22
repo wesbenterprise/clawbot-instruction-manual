@@ -1000,7 +1000,9 @@
           s.classList.remove('hidden');
         } else {
           const tags = s.dataset.tags || '';
-          s.classList.toggle('hidden', !tags.includes(filter));
+          const matches = tags.includes(filter);
+          s.classList.toggle('hidden', !matches);
+          if (matches) s.classList.add('open');
         }
       });
     });
