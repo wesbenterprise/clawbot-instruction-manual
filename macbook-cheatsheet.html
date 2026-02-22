@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MacBook Cheat Sheet — From Zero to Hero</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #181b24;
+    --surface2: #1e2230;
+    --border: #2a2f3e;
+    --text: #e4e7ef;
+    --text-dim: #8890a4;
+    --accent: #4af;
+    --accent2: #a78bfa;
+    --green: #34d399;
+    --orange: #fb923c;
+    --pink: #f472b6;
+    --red: #f87171;
+    --yellow: #fbbf24;
+    --key-bg: #252a3a;
+    --key-border: #3a4060;
+    --key-shadow: #0a0c12;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─── HEADER ─── */
+  .hero {
+    position: relative;
+    padding: 3rem 2rem 2rem;
+    text-align: center;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 0%, rgba(68,170,255,.12) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 80% 100%, rgba(167,139,250,.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 900;
+    letter-spacing: -1px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2), var(--pink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: .4rem;
+  }
+  .hero .subtitle {
+    color: var(--text-dim);
+    font-size: 1.05rem;
+    font-weight: 400;
+  }
+  .hero .subtitle span { color: var(--green); font-weight: 600; }
+
+  /* ─── TOOLBAR ─── */
+  .toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(15,17,23,.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: .75rem 1.5rem;
+    display: flex;
+    gap: .75rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .search-box {
+    flex: 1;
+    min-width: 200px;
+    position: relative;
+  }
+  .search-box input {
+    width: 100%;
+    padding: .6rem 1rem .6rem 2.4rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .85rem;
+    outline: none;
+    transition: border-color .2s;
+  }
+  .search-box input:focus { border-color: var(--accent); }
+  .search-box::before {
+    content: '⌘';
+    position: absolute;
+    left: .85rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-dim);
+    font-size: .8rem;
+  }
+  .filter-btn {
+    padding: .5rem 1rem;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-dim);
+    font-family: 'Outfit', sans-serif;
+    font-size: .82rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all .2s;
+    white-space: nowrap;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(68,170,255,.08);
+  }
+  .print-btn {
+    padding: .5rem 1rem;
+    border-radius: 6px;
+    border: 1px solid var(--green);
+    background: rgba(52,211,153,.08);
+    color: var(--green);
+    font-family: 'Outfit', sans-serif;
+    font-size: .82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+    white-space: nowrap;
+  }
+  .print-btn:hover { background: rgba(52,211,153,.18); }
+
+  /* ─── LEGEND ─── */
+  .legend {
+    max-width: 900px;
+    margin: 1.5rem auto 0;
+    padding: 0 1.5rem;
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    font-size: .8rem;
+    color: var(--text-dim);
+  }
+  .legend-key {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    height: 24px;
+    padding: 0 6px;
+    background: var(--key-bg);
+    border: 1px solid var(--key-border);
+    border-radius: 5px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .7rem;
+    font-weight: 600;
+    box-shadow: 0 2px 0 var(--key-shadow);
+  }
+
+  /* ─── MAIN LAYOUT ─── */
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 1.5rem;
+  }
+
+  /* ─── SECTION ─── */
+  .section {
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--surface);
+    overflow: hidden;
+    transition: opacity .3s, transform .3s;
+  }
+  .section.hidden { display: none; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    user-select: none;
+    transition: background .2s;
+  }
+  .section-header:hover { background: var(--surface2); }
+  .section-icon {
+    font-size: 1.3rem;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-weight: 700;
+    font-size: 1.05rem;
+    flex: 1;
+  }
+  .section-count {
+    font-size: .75rem;
+    color: var(--text-dim);
+    background: var(--surface2);
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 500;
+  }
+  .chevron {
+    color: var(--text-dim);
+    transition: transform .3s;
+    font-size: .8rem;
+  }
+  .section.open .chevron { transform: rotate(180deg); }
+  .section-body {
+    display: none;
+    padding: 0 1.25rem 1.25rem;
+  }
+  .section.open .section-body { display: block; }
+
+  /* ─── CARDS ─── */
+  .card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: .85rem 1rem;
+    margin-bottom: .5rem;
+    transition: all .2s;
+  }
+  .card:hover { border-color: var(--accent); transform: translateX(4px); }
+  .card.search-hit { border-color: var(--yellow); background: rgba(251,191,36,.04); }
+  .card-top {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    flex-wrap: wrap;
+  }
+  .card-keys {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+  .key {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 30px;
+    height: 28px;
+    padding: 0 8px;
+    background: var(--key-bg);
+    border: 1px solid var(--key-border);
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .75rem;
+    font-weight: 600;
+    color: var(--text);
+    box-shadow: 0 2px 0 var(--key-shadow);
+    transition: transform .1s, box-shadow .1s;
+    white-space: nowrap;
+  }
+  .key:active, .key.pressed {
+    transform: translateY(2px);
+    box-shadow: none;
+  }
+  .key.mod { color: var(--accent); border-color: rgba(68,170,255,.3); }
+  .key-plus { color: var(--text-dim); font-size: .7rem; margin: 0 1px; }
+  .card-desc {
+    font-size: .88rem;
+    color: var(--text);
+    flex: 1;
+    min-width: 150px;
+  }
+  .card-note {
+    font-size: .78rem;
+    color: var(--text-dim);
+    margin-top: .4rem;
+    padding-left: .5rem;
+    border-left: 2px solid var(--border);
+    font-style: italic;
+  }
+
+  /* ─── CODE BLOCKS ─── */
+  .code-block {
+    background: #0d0f14;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: .85rem 1rem;
+    margin-bottom: .5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .8rem;
+    line-height: 1.7;
+    overflow-x: auto;
+    position: relative;
+  }
+  .code-block .comment { color: #546e7a; }
+  .code-block .cmd { color: var(--green); }
+  .code-block .flag { color: var(--orange); }
+  .code-block .string { color: var(--yellow); }
+  .code-block .prompt { color: var(--accent); user-select: none; }
+
+  /* ─── TIP CALLOUTS ─── */
+  .tip {
+    background: rgba(68,170,255,.06);
+    border: 1px solid rgba(68,170,255,.2);
+    border-radius: 8px;
+    padding: .75rem 1rem;
+    margin-bottom: .5rem;
+    font-size: .85rem;
+    display: flex;
+    gap: .5rem;
+  }
+  .tip.warn {
+    background: rgba(251,191,36,.06);
+    border-color: rgba(251,191,36,.2);
+  }
+  .tip.danger {
+    background: rgba(248,113,113,.06);
+    border-color: rgba(248,113,113,.2);
+  }
+  .tip-icon { flex-shrink: 0; font-size: 1rem; }
+  .tip-text { flex: 1; }
+  .tip-text strong { font-weight: 600; }
+
+  /* ─── PROGRESS TRACKER ─── */
+  .progress-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--surface);
+    z-index: 999;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    width: 0%;
+    transition: width .3s;
+  }
+
+  /* ─── PRINT STYLES ─── */
+  @media print {
+    * { color-adjust: exact !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    body { background: #fff !important; color: #1a1a2e !important; font-size: 10pt; }
+    .hero { padding: 1rem; border-bottom: 2px solid #1a1a2e; }
+    .hero h1 { -webkit-text-fill-color: #1a1a2e !important; background: none !important; font-size: 22pt; }
+    .hero .subtitle { color: #555 !important; }
+    .hero .subtitle span { color: #1a8a5a !important; }
+    .toolbar, .progress-bar, .legend { display: none !important; }
+    .container { max-width: 100%; padding: .5rem; }
+    .section {
+      break-inside: avoid;
+      border: 1.5px solid #ccc !important;
+      background: #fff !important;
+      margin-bottom: .75rem;
+      page-break-inside: avoid;
+    }
+    .section-body { display: block !important; }
+    .section-header { padding: .5rem .75rem; }
+    .section-icon { font-size: 1rem; width: 24px; height: 24px; }
+    .section-title { font-size: 10pt; color: #1a1a2e !important; }
+    .section-count { display: none; }
+    .chevron { display: none; }
+    .card {
+      background: #f8f9fa !important;
+      border: 1px solid #ddd !important;
+      padding: .4rem .6rem;
+      margin-bottom: .3rem;
+      break-inside: avoid;
+    }
+    .card:hover { transform: none; }
+    .key {
+      background: #e9ecef !important;
+      border: 1px solid #aaa !important;
+      box-shadow: none !important;
+      color: #1a1a2e !important;
+      font-size: 7pt;
+      height: 20px;
+      min-width: 22px;
+      padding: 0 4px;
+    }
+    .key.mod { color: #0066cc !important; border-color: #0066cc !important; }
+    .card-desc { font-size: 8.5pt; color: #1a1a2e !important; }
+    .card-note { font-size: 7.5pt; color: #666 !important; border-left-color: #ccc !important; }
+    .code-block {
+      background: #f4f4f4 !important;
+      border: 1px solid #ccc !important;
+      font-size: 7.5pt;
+      padding: .4rem .6rem;
+    }
+    .code-block .comment { color: #888 !important; }
+    .code-block .cmd { color: #0a7c42 !important; }
+    .code-block .flag { color: #b35900 !important; }
+    .code-block .string { color: #996600 !important; }
+    .code-block .prompt { color: #0066cc !important; }
+    .tip { padding: .4rem .6rem; font-size: 8pt; }
+    .tip.warn { background: #fffbeb !important; border-color: #d4a017 !important; }
+    .tip.danger { background: #fef2f2 !important; border-color: #c53030 !important; }
+    a { color: #0066cc !important; }
+  }
+
+  @media (max-width: 600px) {
+    .card-top { flex-direction: column; align-items: flex-start; gap: .4rem; }
+    .filter-btn { font-size: .75rem; padding: .4rem .7rem; }
+  }
+
+  /* Animate in */
+  .section { animation: fadeUp .4s ease both; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>⌘ MacBook Cheat Sheet</h1>
+  <p class="subtitle">For a <span>40-year-old guy</span> switching from Windows. You got this.</p>
+</div>
+
+<div class="toolbar">
+  <div class="search-box">
+    <input type="text" id="search" placeholder="Search shortcuts, commands, tips..." autocomplete="off">
+  </div>
+  <button class="filter-btn active" data-filter="all">All</button>
+  <button class="filter-btn" data-filter="basics">Basics</button>
+  <button class="filter-btn" data-filter="shortcuts">Keys</button>
+  <button class="filter-btn" data-filter="terminal">Terminal</button>
+  <button class="filter-btn" data-filter="dev">Dev</button>
+  <button class="print-btn" onclick="window.print()">🖨 Print</button>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><span class="legend-key">⌘</span> = Command (Cmd)</div>
+  <div class="legend-item"><span class="legend-key">⌥</span> = Option (Alt)</div>
+  <div class="legend-item"><span class="legend-key">⌃</span> = Control</div>
+  <div class="legend-item"><span class="legend-key">⇧</span> = Shift</div>
+  <div class="legend-item"><span class="legend-key">↩</span> = Return / Enter</div>
+</div>
+
+<div class="container" id="sections">
+
+<!-- ══════════════════════════════════════ -->
+<!-- SECTION: MENTAL MODEL -->
+<!-- ══════════════════════════════════════ -->
+<div class="section open" data-tags="basics" style="animation-delay:.05s">
+  <div class="section-header" onclick="toggleSection(this)">
+    <div class="section-icon" style="background:rgba(68,170,255,.12);">🧠</div>
+    <div class="section-title">The Big Mental Shifts</div>
+    <span class="section-count">5 tips</span>
+    <span class="chevron">▼</span>
+  </div>
+  <div class="section-body">
+    <div class="tip">
+      <span class="tip-icon">1️⃣</span>
+      <div class="tip-text"><strong>⌘ Cmd = Ctrl.</strong> Everywhere you'd use Ctrl on Windows, use ⌘ Cmd on Mac. Copy = ⌘C. Paste = ⌘V. Save = ⌘S. It's the key right next to the spacebar.</div>
+    </div>
+    <div class="tip">
+      <span class="tip-icon">2️⃣</span>
+      <div class="tip-text"><strong>Closing a window ≠ quitting the app.</strong> Clicking the red ✕ closes the window but the app stays running. To actually quit: ⌘Q. Check the Dock for the little dot under the icon.</div>
+    </div>
+    <div class="tip">
+      <span class="tip-icon">3️⃣</span>
+      <div class="tip-text"><strong>Finder = File Explorer.</strong> It's always running. You can't quit it. The blue smiley face in your Dock is your file browser.</div>
+    </div>
+    <div class="tip">
+      <span class="tip-icon">4️⃣</span>
+      <div class="tip-text"><strong>Installing apps:</strong> Drag .dmg/.app to the Applications folder, or use Homebrew (see Terminal section). No .exe files. No registry. No "Program Files."</div>
+    </div>
+    <div class="tip">
+      <span class="tip-icon">5️⃣</span>
+      <div class="tip-text"><strong>Right-click exists.</strong> Two-finger tap on trackpad, or Control+Click. Enable it in System Settings → Trackpad → Secondary Click.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SECTION: ESSENTIAL SHORTCUTS -->
+<!-- ══════════════════════════════════════ -->
+<div class="section open" data-tags="shortcuts basics" style="animation-delay:.1s">
+  <div class="section-header" onclick="toggleSection(this)">
+    <div class="section-icon" style="background:rgba(167,139,250,.12);">⌨️</div>
+    <div class="section-title">Essential Keyboard Shortcuts</div>
+    <span class="section-count">14 shortcuts</span>
+    <span class="chevron">▼</span>
+  </div>
+  <div class="section-body">
+    <div class="card" data-search="copy paste cut undo redo select all save">
+      <div class="card-top">
+        <div class="card-keys"><span class="key mod">⌘</span><span class="key-plus">+</span><span class="key">C/V/X</span></div>
+        <div class="card-desc">Copy / Paste / Cut</div>
+      </div>
+    </div>
+    <div class="card" data-search="undo redo">
+      <div class="card-top">
+        <div class="card-keys"><span class="key mod">⌘</span><span class="key-plus">+</span><span class="key">Z</span></div>
+        <div class="card-desc">Undo (add ⇧ for Redo)</div>
+      </div>
+    </div>
+    <div class="card" data-search="spotlight search launch app find file">
+      <div class="card-top">
+        <div class="card-keys"><span class="key mod">⌘</span><span class="key-plus">+</span><span class="key">Space</span></div>
+        <div class="card-desc">Spotlight Search — launch apps, find files, do math, convert units</div>
+      </div>
+      <div class="card-note">This is your new Start Menu. Use it for EVERYTHING. Type the first few letters of any app.</div>
+    </div>
+    <div class="card" data-search="tab switch application alt tab">
+      <div class="card-top">
+        <div class="card-keys"><span class="key mod">⌘</span><span class="key-plus">+</span><span class="key">Tab</span></div>
+        <div class="card-desc">Switch between apps (like Alt+Tab on Windows)</div>
+      </div>
+    </div>
+    <div class="card" data-search="tab switch window same app tilde">
+      <div class="card-top">
+        <div class="card-keys"><span class="key mod">⌘</span><span class="key-plus">+</span><span class="key">`</span></div>
+        <div class="card-desc">Switch between windows of the same app</div>
+      </div>
+    </div>
+    <div class="card" data-search="close window tab">
+      <div class="card-top">
+        <div class="card-keys"><span class="key mod">⌘</span><span class="key-plus">+</span><span class="key">W</span></div>
+        <div class="card-desc">Close current window/tab</div>
+      </div>
+    </div>
+    <div class="card" data-search="quit application exit program">
+      <div class="card-top">
+        <div class="card-keys"><span class="key mod">⌘</span><span class="key-plus">+</span><span class="key">Q</span></div>
+        <div class="card-desc">Quit the entire application</div>
+      </div>
+    </div>
+    <div class="card" data-search="new tab browser">
+      <div class="card-top">
+        <div class="card-keys"><span class="key mod">⌘</span><span class="key-plus">+</span><span class="key">T</span></div>
+        <div class="card-desc">New tab (in browser, Finder, Terminal, etc.)</div>
+      </div>
+    </div>
+    <div class="card" data-search="screenshot screen capture full">
+      <div class="card-top">
+        <div class="card-keys"><span class="key mod">⌘</span><span class="key-plus">+</span><span class="key mod">⇧</span><span class="key-plus">+</span><span class="key">3</span></div>
+        <div class="card-desc">Screenshot — entire screen</div>
+      </div>
+    </div>
+    <div class="card" data-search="screenshot area selection region">
+      <div class="card-top">
+        <div class="card-keys"><span class="key mod">⌘</span><span class="key-plus">+</span><span class="key mod">⇧</span><span class="key-plus">+</span><span class="key">4</span></div>
+        <div class="card-desc">Screenshot — select area (crosshair)</div>
+      </div>
+      <div class="card-note">Press Space after to capture a specific window. Saves to Desktop by default.</div>
+    </div>
+    <div class="card" data-search="screenshot recording toolbar video">
+      <div class="card-top">
+        <div class="card-keys"><span class="key mod">⌘</span><span class="key-plus">+</span><span class="key mod">⇧</span><span class="key-plus">+</span><span class="key">5</span></div>
+        <div class="card-desc">Screenshot toolbar (includes screen recording)</div>
+      </div>
+    </div>
+    <div class="card" data-search="force quit frozen application hang crash task manager">
+      <div class="card-top">
+        <div class="card-keys"><span class="key mod">⌘</span><span class="key-plus">+</span><span class="key mod">⌥</span><span class="key-plus">+</span><span class="key">Esc</span></div>
+        <div class="card-desc">Force Quit menu (your Ctrl+Alt+Delete)</div>
+      </div>
+    </div>
+    <div class="card" data-search="lock screen sleep security">
+      <div class="card-top">
+        <div class="card-keys"><span class="key mod">⌃</span><span class="key-plus">+</span><span class="key mod">⌘</span><span class="key-plus">+</span><span class="key">Q</span></div>
+        <div class="card-desc">Lock screen</div>
+      </div>
+    </div>
+    <div class="card" data-search="preferences settings system gear options">
+      <div class="card-top">
+        <div class="card-keys"><span class="key mod">⌘</span><span class="key-plus">+</span><span class="key">,</span></div>
+        <div class="card-desc">Open Preferences/Settings for the current app</div>
+      </div>
+      <div class="card-note">Works in virtually every Mac app. A universal convention.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SECTION: TRACKPAD GESTURES -->
+<!-- ══════════════════════════════════════ -->
+<div class="section" data-tags="basics" style="animation-delay:.15s">
+  <div class="section-header" onclick="toggleSection(this)">
+    <div class="section-icon" style="background:rgba(52,211,153,.12);">🤌</div>
+    <div class="section-title">Trackpad Gestures (Use These!)</div>
+    <span class="section-count">7 gestures</span>
+    <span class="chevron">▼</span>
+  </div>
+  <div class="section-body">
+    <div class="tip">
+      <span class="tip-icon">💡</span>
+      <div class="tip-text">The Mac trackpad is <strong>elite</strong>. Seriously. Give it a week and you'll never want a mouse again.</div>
+    </div>
+    <div class="card" data-search="two finger scroll trackpad gesture"><div class="card-top"><div class="card-keys"><span class="key">2-finger scroll</span></div><div class="card-desc">Scroll (it's "natural" scrolling — push up to scroll down, like a phone)</div></div><div class="card-note">Hate it? System Settings → Trackpad → uncheck "Natural scrolling"</div></div>
+    <div class="card" data-search="two finger tap right click trackpad"><div class="card-top"><div class="card-keys"><span class="key">2-finger tap</span></div><div class="card-desc">Right-click (secondary click)</div></div></div>
+    <div class="card" data-search="pinch zoom trackpad"><div class="card-top"><div class="card-keys"><span class="key">Pinch</span></div><div class="card-desc">Zoom in/out (like a phone)</div></div></div>
+    <div class="card" data-search="three finger swipe spaces desktop switch"><div class="card-top"><div class="card-keys"><span class="key">3-finger swipe ←→</span></div><div class="card-desc">Switch between Desktops / Spaces</div></div><div class="card-note">Create multiple desktops: swipe up with 3 fingers, then click "+" at top</div></div>
+    <div class="card" data-search="three finger swipe up mission control expose"><div class="card-top"><div class="card-keys"><span class="key">3-finger swipe ↑</span></div><div class="card-desc">Mission Control — see all windows and desktops at once</div></div></div>
+    <div class="card" data-search="four finger pinch launchpad app launcher"><div class="card-top"><div class="card-keys"><span class="key">4-finger pinch</span></div><div class="card-desc">Launchpad (all your apps in a grid, like a phone home screen)</div></div></div>
+    <div class="card" data-search="force click look up define preview"><div class="card-top"><div class="card-keys"><span class="key">Force click</span></div><div class="card-desc">Press harder on a word to look it up, preview links, etc.</div></div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SECTION: FINDER & FILES -->
+<!-- ══════════════════════════════════════ -->
+<div class="section" data-tags="basics shortcuts" style="animation-delay:.2s">
+  <div class="section-header" onclick="toggleSection(this)">
+    <div class="section-icon" style="background:rgba(244,114,182,.12);">📁</div>
+    <div class="section-title">Finder & File Management</div>
+    <span class="section-count">9 tips</span>
+    <span class="chevron">▼</span>
+  </div>
+  <div class="section-body">
+    <div class="card" data-search="delete file trash bin recycle"><div class="card-top"><div class="card-keys"><span class="key mod">⌘</span><span class="key-plus">+</span><span class="key">⌫</span></div><div class="card-desc">Move to Trash (there's no Delete key, ⌫ = Backspace)</div></div></div>
+    <div class="card" data-search="go to folder path location navigate"><div class="card-top"><div class="card-keys"><span class="key mod">⌘</span><span class="key-plus">+</span><span class="key mod">⇧</span><span class="key-plus">+</span><span class="key">G</span></div><div class="card-desc">Go to Folder — type any path to jump directly there</div></div></div>
+    <div class="card" data-search="show hidden files dot files invisible"><div class="card-top"><div class="card-keys"><span class="key mod">⌘</span><span class="key-plus">+</span><span class="key mod">⇧</span><span class="key-plus">+</span><span class="key">.</span></div><div class="card-desc">Show/hide hidden files (dotfiles, system files)</div></div><div class="card-note">Critical for dev work — .env files, .git folders, etc. Toggle on immediately.</div></div>
+    <div class="card" data-search="quick look preview space bar file"><div class="card-top"><div class="card-keys"><span class="key">Space</span></div><div class="card-desc">Quick Look — preview any file instantly without opening it</div></div><div class="card-note">One of the best Mac features. Works on images, PDFs, videos, code, anything.</div></div>
+    <div class="card" data-search="new folder create directory"><div class="card-top"><div class="card-keys"><span class="key mod">⌘</span><span class="key-plus">+</span><span class="key mod">⇧</span><span class="key-plus">+</span><span class="key">N</span></div><div class="card-desc">New folder</div></div></div>
+    <div class="card" data-search="get info properties file size details"><div class="card-top"><div class="card-keys"><span class="key mod">⌘</span><span class="key-plus">+</span><span class="key">I</span></div><div class="card-desc">Get Info (file properties, permissions, size)</div></div></div>
+    <div class="card" data-search="path bar location address bar finder"><div class="card-top"><div class="card-keys"><span class="key mod">⌘</span><span class="key-plus">+</span><span class="key mod">⌥</span><span class="key-plus">+</span><span class="key">P</span></div><div class="card-desc">Show Path Bar at bottom of Finder</div></div><div class="card-note">Do this once! Shows your full path like Windows Explorer's address bar.</div></div>
+    <div class="card" data-search="copy path file clipboard location"><div class="card-top"><div class="card-keys"><span class="key mod">⌘</span><span class="key-plus">+</span><span class="key mod">⌥</span><span class="key-plus">+</span><span class="key">C</span></div><div class="card-desc">Copy file path to clipboard</div></div></div>
+    <div class="tip warn">
+      <span class="tip-icon">⚠️</span>
+      <div class="tip-text"><strong>Mac "Cut" for files is weird:</strong> Copy with ⌘C, then paste with <strong>⌘⌥V</strong> (Option+Cmd+V) to "move" instead of duplicate. There's no ⌘X for files.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SECTION: TEXT EDITING -->
+<!-- ══════════════════════════════════════ -->
+<div class="section" data-tags="shortcuts" style="animation-delay:.25s">
+  <div class="section-header" onclick="toggleSection(this)">
+    <div class="section-icon" style="background:rgba(251,191,36,.12);">✏️</div>
+    <div class="section-title">Text Editing Power Moves</div>
+    <span class="section-count">7 shortcuts</span>
+    <span class="chevron">▼</span>
+  </div>
+  <div class="section-body">
+    <div class="tip">
+      <span class="tip-icon">💡</span>
+      <div class="tip-text"><strong>No Home/End/PgUp/PgDn keys?</strong> Mac uses Cmd and Option combos instead. It's actually faster once you get used to it.</div>
+    </div>
+    <div class="card" data-search="home beginning line cursor"><div class="card-top"><div class="card-keys"><span class="key mod">⌘</span><span class="key-plus">+</span><span class="key">←</span></div><div class="card-desc">Jump to beginning of line (Home)</div></div></div>
+    <div class="card" data-search="end line cursor"><div class="card-top"><div class="card-keys"><span class="key mod">⌘</span><span class="key-plus">+</span><span class="key">→</span></div><div class="card-desc">Jump to end of line (End)</div></div></div>
+    <div class="card" data-search="word jump skip cursor option"><div class="card-top"><div class="card-keys"><span class="key mod">⌥</span><span class="key-plus">+</span><span class="key">←/→</span></div><div class="card-desc">Jump word by word (like Ctrl+Arrow on Windows)</div></div></div>
+    <div class="card" data-search="select word shift option"><div class="card-top"><div class="card-keys"><span class="key mod">⌥</span><span class="key-plus">+</span><span class="key mod">⇧</span><span class="key-plus">+</span><span class="key">←/→</span></div><div class="card-desc">Select word by word</div></div></div>
+    <div class="card" data-search="top document beginning page up"><div class="card-top"><div class="card-keys"><span class="key mod">⌘</span><span class="key-plus">+</span><span class="key">↑</span></div><div class="card-desc">Jump to top of document</div></div></div>
+    <div class="card" data-search="bottom document end page down"><div class="card-top"><div class="card-keys"><span class="key mod">⌘</span><span class="key-plus">+</span><span class="key">↓</span></div><div class="card-desc">Jump to bottom of document</div></div></div>
+    <div class="card" data-search="delete word forward backspace"><div class="card-top"><div class="card-keys"><span class="key mod">⌥</span><span class="key-plus">+</span><span class="key">⌫</span></div><div class="card-desc">Delete entire word backward</div></div><div class="card-note">Way faster than holding backspace. Fn+⌫ deletes forward (like the Delete key on Windows).</div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SECTION: TERMINAL BASICS -->
+<!-- ══════════════════════════════════════ -->
+<div class="section open" data-tags="terminal dev" style="animation-delay:.3s">
+  <div class="section-header" onclick="toggleSection(this)">
+    <div class="section-icon" style="background:rgba(52,211,153,.12);">💻</div>
+    <div class="section-title">Terminal — Getting Started</div>
+    <span class="section-count">essentials</span>
+    <span class="chevron">▼</span>
+  </div>
+  <div class="section-body">
+    <div class="tip">
+      <span class="tip-icon">💡</span>
+      <div class="tip-text"><strong>Mac's terminal uses Zsh</strong> (not Bash). Config file is <code>~/.zshrc</code>. The default Terminal.app works, but iTerm2 is better for power users.</div>
+    </div>
+    <div class="code-block">
+<span class="comment"># Navigation (same as Linux)</span>
+<span class="prompt">$ </span><span class="cmd">pwd</span>                    <span class="comment"># Print working directory (where am I?)</span>
+<span class="prompt">$ </span><span class="cmd">ls</span> <span class="flag">-la</span>                <span class="comment"># List files (including hidden ones)</span>
+<span class="prompt">$ </span><span class="cmd">cd</span> <span class="string">~/Documents</span>        <span class="comment"># Change directory (~ = home folder)</span>
+<span class="prompt">$ </span><span class="cmd">cd</span> <span class="string">..</span>                  <span class="comment"># Go up one directory</span>
+<span class="prompt">$ </span><span class="cmd">cd</span> <span class="string">-</span>                   <span class="comment"># Go back to previous directory</span>
+<span class="prompt">$ </span><span class="cmd">mkdir</span> <span class="string">my-project</span>       <span class="comment"># Create directory</span>
+<span class="prompt">$ </span><span class="cmd">touch</span> <span class="string">file.txt</span>         <span class="comment"># Create empty file</span>
+<span class="prompt">$ </span><span class="cmd">open</span> <span class="string">.</span>                 <span class="comment"># Open current folder in Finder (Mac-specific!)</span>
+<span class="prompt">$ </span><span class="cmd">open</span> <span class="string">file.pdf</span>          <span class="comment"># Open any file with its default app</span>
+    </div>
+    <div class="code-block">
+<span class="comment"># File operations</span>
+<span class="prompt">$ </span><span class="cmd">cp</span> <span class="string">file.txt backup.txt</span>     <span class="comment"># Copy file</span>
+<span class="prompt">$ </span><span class="cmd">mv</span> <span class="string">old.txt new.txt</span>         <span class="comment"># Rename / move file</span>
+<span class="prompt">$ </span><span class="cmd">rm</span> <span class="string">file.txt</span>                <span class="comment"># Delete file (no Trash — gone forever!)</span>
+<span class="prompt">$ </span><span class="cmd">rm</span> <span class="flag">-rf</span> <span class="string">folder/</span>            <span class="comment"># Delete folder and contents ⚠️ CAREFUL</span>
+<span class="prompt">$ </span><span class="cmd">cat</span> <span class="string">file.txt</span>               <span class="comment"># Print file contents</span>
+<span class="prompt">$ </span><span class="cmd">less</span> <span class="string">file.txt</span>              <span class="comment"># Read long files (q to quit)</span>
+    </div>
+    <div class="tip danger">
+      <span class="tip-icon">🚨</span>
+      <div class="tip-text"><strong>rm -rf has no undo.</strong> Unlike Trash, terminal deletion is permanent. Never run <code>sudo rm -rf /</code> — it will nuke your system.</div>
+    </div>
+    <div class="card" data-search="terminal clear screen">
+      <div class="card-top">
+        <div class="card-keys"><span class="key mod">⌘</span><span class="key-plus">+</span><span class="key">K</span></div>
+        <div class="card-desc">Clear terminal screen (or type <code>clear</code>)</div>
+      </div>
+    </div>
+    <div class="card" data-search="terminal cancel stop kill process">
+      <div class="card-top">
+        <div class="card-keys"><span class="key mod">⌃</span><span class="key-plus">+</span><span class="key">C</span></div>
+        <div class="card-desc">Cancel / kill running command</div>
+      </div>
+    </div>
+    <div class="card" data-search="terminal previous command history up">
+      <div class="card-top">
+        <div class="card-keys"><span class="key">↑</span> / <span class="key">↓</span></div>
+        <div class="card-desc">Scroll through command history</div>
+      </div>
+    </div>
+    <div class="card" data-search="terminal autocomplete tab filename">
+      <div class="card-top">
+        <div class="card-keys"><span class="key">Tab</span></div>
+        <div class="card-desc">Autocomplete file names and commands</div>
+      </div>
+      <div class="card-note">Press Tab twice to see all matches. This saves you so much typing.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SECTION: HOMEBREW -->
+<!-- ══════════════════════════════════════ -->
+<div class="section open" data-tags="terminal dev" style="animation-delay:.35s">
+  <div class="section-header" onclick="toggleSection(this)">
+    <div class="section-icon" style="background:rgba(251,146,60,.12);">🍺</div>
+    <div class="section-title">Homebrew — Your Package Manager</div>
+    <span class="section-count">must-know</span>
+    <span class="chevron">▼</span>
+  </div>
+  <div class="section-body">
+    <div class="tip">
+      <span class="tip-icon">💡</span>
+      <div class="tip-text"><strong>Homebrew is like apt-get or choco</strong> — it installs command-line tools and desktop apps from the terminal. Install it first, use it for everything.</div>
+    </div>
+    <div class="code-block">
+<span class="comment"># Install Homebrew (one-time setup — paste into terminal)</span>
+<span class="prompt">$ </span><span class="cmd">/bin/bash</span> <span class="flag">-c</span> <span class="string">"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</span>
+    </div>
+    <div class="code-block">
+<span class="comment"># Core Homebrew commands</span>
+<span class="prompt">$ </span><span class="cmd">brew</span> <span class="flag">install</span> <span class="string">git</span>           <span class="comment"># Install a CLI tool</span>
+<span class="prompt">$ </span><span class="cmd">brew</span> <span class="flag">install</span> <span class="flag">--cask</span> <span class="string">iterm2</span> <span class="comment"># Install a desktop app (GUI)</span>
+<span class="prompt">$ </span><span class="cmd">brew</span> <span class="flag">update</span>                <span class="comment"># Update Homebrew itself</span>
+<span class="prompt">$ </span><span class="cmd">brew</span> <span class="flag">upgrade</span>               <span class="comment"># Upgrade all installed packages</span>
+<span class="prompt">$ </span><span class="cmd">brew</span> <span class="flag">list</span>                  <span class="comment"># See what's installed</span>
+<span class="prompt">$ </span><span class="cmd">brew</span> <span class="flag">search</span> <span class="string">python</span>        <span class="comment"># Search for packages</span>
+<span class="prompt">$ </span><span class="cmd">brew</span> <span class="flag">uninstall</span> <span class="string">git</span>        <span class="comment"># Remove a package</span>
+<span class="prompt">$ </span><span class="cmd">brew</span> <span class="flag">doctor</span>                <span class="comment"># Troubleshoot issues</span>
+    </div>
+    <div class="code-block">
+<span class="comment"># 🚀 Recommended first installs</span>
+<span class="prompt">$ </span><span class="cmd">brew</span> <span class="flag">install</span> <span class="string">git node python</span>
+<span class="prompt">$ </span><span class="cmd">brew</span> <span class="flag">install</span> <span class="flag">--cask</span> <span class="string">visual-studio-code iterm2 docker</span>
+<span class="prompt">$ </span><span class="cmd">brew</span> <span class="flag">install</span> <span class="flag">--cask</span> <span class="string">cursor</span>  <span class="comment"># AI-powered code editor</span>
+    </div>
+    <div class="tip">
+      <span class="tip-icon">🎯</span>
+      <div class="tip-text"><strong>Cask = GUI apps.</strong> <code>brew install</code> = CLI tools. <code>brew install --cask</code> = desktop apps (VS Code, Chrome, Slack, etc.)</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SECTION: DEV ENVIRONMENT -->
+<!-- ══════════════════════════════════════ -->
+<div class="section" data-tags="dev terminal" style="animation-delay:.4s">
+  <div class="section-header" onclick="toggleSection(this)">
+    <div class="section-icon" style="background:rgba(68,170,255,.12);">🛠</div>
+    <div class="section-title">Dev Environment Setup</div>
+    <span class="section-count">stack setup</span>
+    <span class="chevron">▼</span>
+  </div>
+  <div class="section-body">
+    <div class="code-block">
+<span class="comment"># ─── Xcode Command Line Tools (REQUIRED for dev work) ───</span>
+<span class="prompt">$ </span><span class="cmd">xcode-select</span> <span class="flag">--install</span>    <span class="comment"># Installs git, make, clang, etc.</span>
+
+<span class="comment"># ─── Node.js (for your Vercel/Next.js projects) ───</span>
+<span class="prompt">$ </span><span class="cmd">brew</span> <span class="flag">install</span> <span class="string">node</span>          <span class="comment"># or use nvm for version management</span>
+<span class="prompt">$ </span><span class="cmd">node</span> <span class="flag">--version</span>             <span class="comment"># Verify it works</span>
+<span class="prompt">$ </span><span class="cmd">npm</span> <span class="flag">--version</span>
+
+<span class="comment"># ─── Git setup ───</span>
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="flag">config</span> <span class="flag">--global</span> <span class="string">user.name</span> <span class="string">"Wesley Barnett"</span>
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="flag">config</span> <span class="flag">--global</span> <span class="string">user.email</span> <span class="string">"<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="86ffe9f3c6e3ebe7efeaa8e5e9eb">[email&#160;protected]</a>"</span>
+
+<span class="comment"># ─── SSH key for GitHub (so you don't type passwords) ───</span>
+<span class="prompt">$ </span><span class="cmd">ssh-keygen</span> <span class="flag">-t ed25519</span> <span class="flag">-C</span> <span class="string">"<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ea93859faa8f878b8386c4898587">[email&#160;protected]</a>"</span>
+<span class="prompt">$ </span><span class="cmd">cat</span> <span class="string">~/.ssh/id_ed25519.pub</span>  <span class="comment"># Copy this → GitHub Settings → SSH Keys</span>
+
+<span class="comment"># ─── Python (if needed alongside Node) ───</span>
+<span class="prompt">$ </span><span class="cmd">brew</span> <span class="flag">install</span> <span class="string">python</span>
+<span class="prompt">$ </span><span class="cmd">python3</span> <span class="flag">--version</span>
+
+<span class="comment"># ─── Supabase CLI ───</span>
+<span class="prompt">$ </span><span class="cmd">brew</span> <span class="flag">install</span> <span class="string">supabase/tap/supabase</span>
+    </div>
+    <div class="tip">
+      <span class="tip-icon">🎯</span>
+      <div class="tip-text"><strong>Your Stack Quick Setup:</strong> After Homebrew, run: <code>brew install node git && brew install --cask cursor docker</code> — that gets you Node, Git, Cursor editor, and Docker in one shot.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SECTION: AI / AGENTS -->
+<!-- ══════════════════════════════════════ -->
+<div class="section" data-tags="dev terminal" style="animation-delay:.45s">
+  <div class="section-header" onclick="toggleSection(this)">
+    <div class="section-icon" style="background:rgba(167,139,250,.12);">🤖</div>
+    <div class="section-title">AI Agents & Local Tools</div>
+    <span class="section-count">agent setup</span>
+    <span class="chevron">▼</span>
+  </div>
+  <div class="section-body">
+    <div class="code-block">
+<span class="comment"># ─── Claude Code (Anthropic's coding agent) ───</span>
+<span class="prompt">$ </span><span class="cmd">npm</span> <span class="flag">install</span> <span class="flag">-g</span> <span class="string">@anthropic-ai/claude-code</span>
+<span class="prompt">$ </span><span class="cmd">claude</span>                     <span class="comment"># Launch Claude in terminal</span>
+
+<span class="comment"># ─── Ollama (run LLMs locally) ───</span>
+<span class="prompt">$ </span><span class="cmd">brew</span> <span class="flag">install</span> <span class="flag">--cask</span> <span class="string">ollama</span>
+<span class="prompt">$ </span><span class="cmd">ollama</span> <span class="flag">run</span> <span class="string">llama3</span>          <span class="comment"># Download & chat with Llama 3</span>
+<span class="prompt">$ </span><span class="cmd">ollama</span> <span class="flag">list</span>                <span class="comment"># See downloaded models</span>
+
+<span class="comment"># ─── Open WebUI (ChatGPT-style interface for local models) ───</span>
+<span class="prompt">$ </span><span class="cmd">docker</span> <span class="flag">run</span> <span class="flag">-d</span> <span class="flag">-p</span> <span class="string">3000:8080</span> \
+    <span class="flag">--add-host=host.docker.internal:host-gateway</span> \
+    <span class="flag">-v</span> <span class="string">open-webui:/app/backend/data</span> \
+    <span class="flag">--name</span> <span class="string">open-webui</span> \
+    <span class="string">ghcr.io/open-webui/open-webui:main</span>
+
+<span class="comment"># ─── n8n (workflow automation / AI agent builder) ───</span>
+<span class="prompt">$ </span><span class="cmd">brew</span> <span class="flag">install</span> <span class="string">n8n</span>
+<span class="prompt">$ </span><span class="cmd">n8n</span> <span class="flag">start</span>                  <span class="comment"># Opens at http://localhost:5678</span>
+    </div>
+    <div class="tip">
+      <span class="tip-icon">⚡</span>
+      <div class="tip-text"><strong>Apple Silicon advantage:</strong> Your M-series Mac can run local LLMs surprisingly well. Ollama handles the heavy lifting — just <code>ollama run</code> any model.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SECTION: MUST-DO SETTINGS -->
+<!-- ══════════════════════════════════════ -->
+<div class="section" data-tags="basics" style="animation-delay:.5s">
+  <div class="section-header" onclick="toggleSection(this)">
+    <div class="section-icon" style="background:rgba(248,113,113,.12);">⚙️</div>
+    <div class="section-title">Day-1 Settings to Change</div>
+    <span class="section-count">8 tweaks</span>
+    <span class="chevron">▼</span>
+  </div>
+  <div class="section-body">
+    <div class="card" data-search="tap to click trackpad setting"><div class="card-top"><div class="card-desc">✅ System Settings → Trackpad → <strong>Tap to Click</strong> (enable it — Mac doesn't do this by default!)</div></div></div>
+    <div class="card" data-search="dock size hide auto"><div class="card-top"><div class="card-desc">✅ System Settings → Desktop & Dock → Shrink dock size, enable <strong>auto-hide</strong></div></div><div class="card-note">Gives you more screen space. The Dock appears when you hover at the bottom.</div></div>
+    <div class="card" data-search="hot corners screen saver lock"><div class="card-top"><div class="card-desc">✅ System Settings → Desktop & Dock → <strong>Hot Corners</strong> → set bottom-right to Lock Screen</div></div></div>
+    <div class="card" data-search="key repeat speed hold"><div class="card-top"><div class="card-desc">✅ System Settings → Keyboard → <strong>Key repeat rate</strong> = Fast, <strong>Delay</strong> = Short</div></div><div class="card-note">The default key repeat is painfully slow for coding. Max it out.</div></div>
+    <div class="card" data-search="three finger drag trackpad accessibility"><div class="card-top"><div class="card-desc">✅ System Settings → Accessibility → Pointer Control → Trackpad Options → <strong>Use trackpad for dragging</strong> → Three-finger drag</div></div><div class="card-note">Game changer. Move windows, select text, and drag files with 3 fingers. Way better than click-and-drag.</div></div>
+    <div class="card" data-search="finder show extensions file type"><div class="card-top"><div class="card-desc">✅ Finder → Settings → Advanced → <strong>Show all filename extensions</strong></div></div></div>
+    <div class="card" data-search="finder default home folder"><div class="card-top"><div class="card-desc">✅ Finder → Settings → General → <strong>New Finder windows show</strong> → change to your Home folder</div></div></div>
+    <div class="card" data-search="scroll direction natural windows normal"><div class="card-top"><div class="card-desc">🤷 System Settings → Trackpad → <strong>Natural scrolling</strong> — uncheck if you hate reversed scrolling</div></div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SECTION: PRO TIPS -->
+<!-- ══════════════════════════════════════ -->
+<div class="section" data-tags="basics shortcuts dev" style="animation-delay:.55s">
+  <div class="section-header" onclick="toggleSection(this)">
+    <div class="section-icon" style="background:rgba(251,191,36,.12);">🏆</div>
+    <div class="section-title">Pro Tips (Things I Wish I Knew)</div>
+    <span class="section-count">gems</span>
+    <span class="chevron">▼</span>
+  </div>
+  <div class="section-body">
+    <div class="tip">
+      <span class="tip-icon">1.</span>
+      <div class="tip-text"><strong>⌘ + Space is your best friend.</strong> Don't browse for apps. Don't click through folders. Just hit ⌘Space, type 2-3 letters, hit Enter. It launches apps, does math (<code>45*12</code>), converts units (<code>50 usd to eur</code>), and opens files.</div>
+    </div>
+    <div class="tip">
+      <span class="tip-icon">2.</span>
+      <div class="tip-text"><strong>Clipboard history doesn't exist by default.</strong> Install <code>brew install --cask maccy</code> for a free clipboard manager. You'll wonder how you lived without it.</div>
+    </div>
+    <div class="tip">
+      <span class="tip-icon">3.</span>
+      <div class="tip-text"><strong>Window snapping doesn't exist by default.</strong> macOS finally added window tiling in Sequoia (drag to edges), but for full Windows-style snapping, install <code>brew install --cask rectangle</code>. Free.</div>
+    </div>
+    <div class="tip">
+      <span class="tip-icon">4.</span>
+      <div class="tip-text"><strong>The Terminal opens in Zsh.</strong> Your config file is <code>~/.zshrc</code>. To add things to your PATH or set aliases, edit this file: <code>nano ~/.zshrc</code>, then <code>source ~/.zshrc</code> to reload.</div>
+    </div>
+    <div class="tip">
+      <span class="tip-icon">5.</span>
+      <div class="tip-text"><strong>AirDrop is magic.</strong> Send files to your iPhone/iPad instantly. Open Finder → AirDrop in sidebar, or use the Share button anywhere.</div>
+    </div>
+    <div class="tip">
+      <span class="tip-icon">6.</span>
+      <div class="tip-text"><strong>Passwords are in Keychain.</strong> ⌘Space → type "Keychain Access." All your saved passwords, Wi-Fi passwords, certificates are here. Or use the newer Passwords app.</div>
+    </div>
+    <div class="tip">
+      <span class="tip-icon">7.</span>
+      <div class="tip-text"><strong>Activity Monitor = Task Manager.</strong> ⌘Space → type "Activity Monitor" when things feel slow. Check CPU, Memory, Energy tabs.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- SECTION: WINDOWS → MAC ROSETTA STONE -->
+<!-- ══════════════════════════════════════ -->
+<div class="section" data-tags="basics" style="animation-delay:.6s">
+  <div class="section-header" onclick="toggleSection(this)">
+    <div class="section-icon" style="background:rgba(244,114,182,.12);">🗺</div>
+    <div class="section-title">Windows → Mac Translation Guide</div>
+    <span class="section-count">quick ref</span>
+    <span class="chevron">▼</span>
+  </div>
+  <div class="section-body">
+    <div class="card"><div class="card-top"><div class="card-keys"><span class="key" style="min-width:110px">File Explorer</span></div><div class="card-desc">→ <strong>Finder</strong></div></div></div>
+    <div class="card"><div class="card-top"><div class="card-keys"><span class="key" style="min-width:110px">Control Panel</span></div><div class="card-desc">→ <strong>System Settings</strong></div></div></div>
+    <div class="card"><div class="card-top"><div class="card-keys"><span class="key" style="min-width:110px">Task Manager</span></div><div class="card-desc">→ <strong>Activity Monitor</strong></div></div></div>
+    <div class="card"><div class="card-top"><div class="card-keys"><span class="key" style="min-width:110px">Ctrl + Alt + Del</span></div><div class="card-desc">→ <strong>⌘ + ⌥ + Esc</strong> (Force Quit)</div></div></div>
+    <div class="card"><div class="card-top"><div class="card-keys"><span class="key" style="min-width:110px">cmd.exe</span></div><div class="card-desc">→ <strong>Terminal.app</strong> (but it's actually useful)</div></div></div>
+    <div class="card"><div class="card-top"><div class="card-keys"><span class="key" style="min-width:110px">Start Menu</span></div><div class="card-desc">→ <strong>⌘ + Space</strong> (Spotlight) — it's better</div></div></div>
+    <div class="card"><div class="card-top"><div class="card-keys"><span class="key" style="min-width:110px">Recycle Bin</span></div><div class="card-desc">→ <strong>Trash</strong> (right side of Dock)</div></div></div>
+    <div class="card"><div class="card-top"><div class="card-keys"><span class="key" style="min-width:110px">.exe installer</span></div><div class="card-desc">→ <strong>.dmg</strong> (disk image) or <strong>brew install</strong></div></div></div>
+    <div class="card"><div class="card-top"><div class="card-keys"><span class="key" style="min-width:110px">Registry</span></div><div class="card-desc">→ <strong>Doesn't exist.</strong> 🎉 You're free.</div></div></div>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // ─── Section Toggle ───
+  function toggleSection(header) {
+    header.parentElement.classList.toggle('open');
+  }
+
+  // ─── Search ───
+  const searchInput = document.getElementById('search');
+  searchInput.addEventListener('input', () => {
+    const q = searchInput.value.toLowerCase().trim();
+    document.querySelectorAll('.section').forEach(s => {
+      if (!q) {
+        s.classList.remove('hidden');
+        s.querySelectorAll('.card').forEach(c => c.classList.remove('search-hit'));
+        return;
+      }
+      const text = s.textContent.toLowerCase();
+      const cards = s.querySelectorAll('.card');
+      let sectionMatch = false;
+      cards.forEach(c => {
+        const cardText = (c.textContent + ' ' + (c.dataset.search || '')).toLowerCase();
+        if (cardText.includes(q)) {
+          c.classList.add('search-hit');
+          sectionMatch = true;
+        } else {
+          c.classList.remove('search-hit');
+        }
+      });
+      if (text.includes(q)) sectionMatch = true;
+      s.classList.toggle('hidden', !sectionMatch);
+      if (sectionMatch) s.classList.add('open');
+    });
+  });
+
+  // ─── Filter Buttons ───
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      document.querySelectorAll('.section').forEach(s => {
+        if (filter === 'all') {
+          s.classList.remove('hidden');
+        } else {
+          const tags = s.dataset.tags || '';
+          s.classList.toggle('hidden', !tags.includes(filter));
+        }
+      });
+    });
+  });
+
+  // ─── Scroll Progress ───
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    document.getElementById('progressFill').style.width = pct + '%';
+  });
+
+  // ─── Key press animation ───
+  document.addEventListener('keydown', (e) => {
+    const keyMap = { 'Meta': '⌘', 'Alt': '⌥', 'Control':
