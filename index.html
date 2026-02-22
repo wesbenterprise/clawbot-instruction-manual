@@ -805,10 +805,10 @@
 
 <span class="comment"># ─── Git setup ───</span>
 <span class="prompt">$ </span><span class="cmd">git</span> <span class="flag">config</span> <span class="flag">--global</span> <span class="string">user.name</span> <span class="string">"Wesley Barnett"</span>
-<span class="prompt">$ </span><span class="cmd">git</span> <span class="flag">config</span> <span class="flag">--global</span> <span class="string">user.email</span> <span class="string">"<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="86ffe9f3c6e3ebe7efeaa8e5e9eb">[email&#160;protected]</a>"</span>
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="flag">config</span> <span class="flag">--global</span> <span class="string">user.email</span> <span class="string">"you@email.com"</span>
 
 <span class="comment"># ─── SSH key for GitHub (so you don't type passwords) ───</span>
-<span class="prompt">$ </span><span class="cmd">ssh-keygen</span> <span class="flag">-t ed25519</span> <span class="flag">-C</span> <span class="string">"<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ea93859faa8f878b8386c4898587">[email&#160;protected]</a>"</span>
+<span class="prompt">$ </span><span class="cmd">ssh-keygen</span> <span class="flag">-t ed25519</span> <span class="flag">-C</span> <span class="string">"you@email.com"</span>
 <span class="prompt">$ </span><span class="cmd">cat</span> <span class="string">~/.ssh/id_ed25519.pub</span>  <span class="comment"># Copy this → GitHub Settings → SSH Keys</span>
 
 <span class="comment"># ─── Python (if needed alongside Node) ───</span>
@@ -955,7 +955,7 @@
 
 <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   // ─── Section Toggle ───
   function toggleSection(header) {
     header.parentElement.classList.toggle('open');
@@ -1017,4 +1017,17 @@
 
   // ─── Key press animation ───
   document.addEventListener('keydown', (e) => {
-    const keyMap = { 'Meta': '⌘', 'Alt': '⌥', 'Control':
+    const keyMap = { 'Meta': '⌘', 'Alt': '⌥', 'Control': '⌃', 'Shift': '⇧' };
+    const symbol = keyMap[e.key];
+    if (symbol) {
+      document.querySelectorAll('.key').forEach(k => {
+        if (k.textContent.trim() === symbol) {
+          k.classList.add('pressed');
+          setTimeout(() => k.classList.remove('pressed'), 200);
+        }
+      });
+    }
+  });
+</script>
+</body>
+</html>
